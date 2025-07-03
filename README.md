@@ -9,6 +9,8 @@ It uses trained ensemble models to predict health conditions such as heart attac
 
 - 🧠 Arabic NLP for extracting symptoms from user input.
 - 🤖 Reinforcement learning agent to ask relevant follow-up questions.
+- 🔌 Integrates with [OpenRouter](https://openrouter.ai) to provide smart medical explanations.
+- 🇸🇦 Fully Arabic support for output and user interaction.
 - 🧪 Trained ensemble models using RandomForest and XGBoost.
 - 📈 Generates classification reports, confusion matrix, ROC curves.
 - 🌐 Interactive web interface built with Flask.
