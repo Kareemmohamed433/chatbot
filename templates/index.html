@@ -2,955 +2,176 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مساعد تشخيص أمراض القلب الذكي</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#5e35b1">
+    <title>المساعد الطبي الذكي</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #4285f4;
-            --secondary-color: #34a853;
-            --accent-color: #ea4335;
-            --light-color: #f8f9fa;
-            --dark-color: #202124;
-            --gray-color: #5f6368;
-            --warning-color: #fbbc05;
-            --danger-color: #d93025;
-            --heart-color: #ff6b6b;
-        }
-        
-        body {
-            font-family: 'Tajawal', sans-serif;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fef6f6;
-            color: var(--dark-color);
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--heart-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(135deg, #fff9f9 0%, #fff 100%);
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        
-        .header h1 {
-            color: var(--heart-color);
-            margin-bottom: 5px;
-            font-size: 24px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .header h1 svg {
-            width: 24px;
-            height: 24px;
-            fill: var(--heart-color);
-        }
-        
-        .header p {
-            color: var(--gray-color);
-            margin: 0;
-            font-size: 14px;
-        }
-        
-        .language-toggle {
-            background-color: var(--gray-color);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-        
-        .language-toggle:hover {
-            background-color: #4a4e53;
-            transform: translateY(-1px);
-        }
-        
-        .chat-container {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            height: 60vh;
-            overflow-y: auto;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #ffecec;
-        }
-        
-        .message {
-            margin-bottom: 15px;
-            padding: 12px 16px;
-            border-radius: 18px;
-            max-width: 80%;
-            line-height: 1.5;
-            position: relative;
-            animation: fadeIn 0.3s ease;
-            font-size: 15px;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .user-message {
-            background-color: var(--heart-color);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 5px;
-            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
-        }
-        
-        .bot-message {
-            background-color: #f9f9f9;
-            margin-right: auto;
-            border-bottom-left-radius: 5px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border: 1px solid #f0f0f0;
-        }
-        
-        .diagnosis-message {
-            background-color: var(--secondary-color);
-            color: white;
-            margin: 15px auto;
-            border-radius: 12px;
-            padding: 15px;
-            max-width: 90%;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(52, 168, 83, 0.3);
-        }
-        
-        .warning-message {
-            background-color: var(--warning-color);
-            color: var(--dark-color);
-            margin: 15px auto;
-            border-radius: 12px;
-            padding: 15px;
-            max-width: 90%;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(251, 188, 5, 0.3);
-        }
-        
-        .danger-message {
-            background-color: var(--danger-color);
-            color: white;
-            margin: 15px auto;
-            border-radius: 12px;
-            padding: 15px;
-            max-width: 90%;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(217, 48, 37, 0.3);
-        }
-        
-        .options-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-        }
-        
-        .option-button {
-            padding: 8px 16px;
-            background-color: var(--heart-color);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(255, 107, 107, 0.3);
-        }
-        
-        .option-button:hover:not(:disabled) {
-            background-color: #ff5252;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
-        }
-        
-        .option-button:disabled {
-            background-color: #e0e0e0;
-            color: var(--gray-color);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .input-area {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            background-color: white;
-            border-radius: 25px;
-            padding: 5px 15px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-            border: 1px solid #f0f0f0;
-            transition: all 0.3s ease;
-        }
-        
-        .input-area:focus-within {
-            box-shadow: 0 2px 12px rgba(255, 107, 107, 0.2);
-            border-color: var(--heart-color);
-        }
-        
-        #user-input {
-            flex-grow: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 20px;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 16px;
-            outline: none;
-            background-color: transparent;
-        }
-        
-        #send-button {
-            padding: 10px;
-            background-color: var(--heart-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(255, 107, 107, 0.3);
-        }
-        
-        #send-button:hover {
-            background-color: #ff5252;
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
-        }
-        
-        #send-button svg {
-            width: 20px;
-            height: 20px;
-            fill: white;
-        }
-        
-        .typing-indicator {
-            display: flex;
-            padding: 10px 15px;
-            background-color: #f9f9f9;
-            border-radius: 18px;
-            margin-bottom: 15px;
-            align-self: flex-start;
-            border: 1px solid #f0f0f0;
-        }
-        
-        .typing-indicator span {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: var(--heart-color);
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: bounce 1.4s infinite ease-in-out;
-        }
-        
-        .typing-indicator span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .typing-indicator span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes bounce {
-            0%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-5px); }
-        }
-        
-        .confidence-meter {
-            width: 100%;
-            height: 6px;
-            background-color: #e0e0e0;
-            border-radius: 3px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        
-        .confidence-level {
-            height: 100%;
-            background: linear-gradient(to right, var(--danger-color), var(--warning-color), var(--secondary-color));
-            border-radius: 3px;
-            transition: width 0.5s ease;
-        }
-        
-        .recommendations {
-            background-color: #fff5f5;
-            border-right: 4px solid var(--heart-color);
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 8px 0 0 8px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .recommendations:hover {
-            background-color: #ffefef;
-        }
-        
-        .recommendations.collapsed::before {
-            content: '▼ ';
-            font-size: 12px;
-        }
-        
-        .recommendations.expanded::before {
-            content: '▲ ';
-            font-size: 12px;
-        }
-        
-        .severity-indicator {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-            margin-left: 8px;
-        }
-        
-        .severity-high {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .severity-medium {
-            background-color: var(--warning-color);
-            color: var(--dark-color);
-        }
-        
-        .severity-low {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        
-        .modal-content {
-            background-color: white;
-            padding: 25px;
-            border-radius: 12px;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            border: 1px solid #f0f0f0;
-        }
-        
-        .modal-close {
-            background-color: var(--heart-color);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 15px;
-            border: none;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.2s ease;
-        }
-        
-        .modal-close:hover {
-            background-color: #ff5252;
-            transform: translateY(-1px);
-        }
-        
-        .restart-button {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-left: 10px;
-            border: none;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.2s ease;
-        }
-        
-        .restart-button:hover {
-            background-color: #c5221f;
-            transform: translateY(-1px);
-        }
-        
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--heart-color);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .heart-icon {
-            color: var(--heart-color);
-            margin-left: 5px;
-        }
-        
-        .risk-factors {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #fff5f5;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        
-        .risk-factor-item {
-            display: flex;
-            align-items: center;
-            margin: 5px 0;
-        }
-        
-        .risk-factor-item svg {
-            width: 16px;
-            height: 16px;
-            margin-left: 8px;
-            fill: var(--heart-color);
-        }
-        
-        .emergency-card {
-            background-color: #fff5f5;
-            border: 2px solid var(--danger-color);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(217, 48, 37, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(217, 48, 37, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(217, 48, 37, 0); }
-        }
-        
-        .emergency-card h3 {
-            color: var(--danger-color);
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .emergency-card svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--danger-color);
-        }
-        
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            
-            .header {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .header h1 {
-                font-size: 20px;
-            }
-            
-            .chat-container {
-                height: 55vh;
-                padding: 15px;
-            }
-            
-            .message {
-                max-width: 90%;
-                padding: 10px 12px;
-                font-size: 14px;
-            }
-            
-            .options-container {
-                flex-direction: column;
-            }
-            
-            .option-button {
-                width: 100%;
-                font-size: 12px;
-            }
-            
-            .input-area {
-                padding: 5px 10px;
-            }
-            
-            #user-input {
-                padding: 10px;
-                font-size: 14px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
 </head>
 <body>
-    <div class="header">
-        <div>
-            <h1>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    <div class="app-container">
+        <!-- Floating action buttons -->
+        <div class="fab-container">
+            <button class="fab-main" id="main-fab">
+                <i class="fas fa-ellipsis-h"></i>
+            </button>
+            <div class="fab-options">
+                <button class="fab-option" id="voice-fab" title="Voice Input">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button class="fab-option" id="language-fab" title="Toggle Language">
+                    <i class="fas fa-language"></i>
+                </button>
+                <button class="fab-option" id="restart-fab" title="Restart Chat">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Header with gradient background -->
+        <div class="header">
+            <div class="header-gradient"></div>
+            <div class="header-content">
+                <div class="logo-container animate__animated animate__fadeIn">
+                    <div class="heart-pulse">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="header-text">
+                        <h1>المساعد الطبي الذكي</h1>
+                        <p>أدخل أعراضك أو اطرح استفسارًا طبيًا وسأساعدك بمعلومات دقيقة</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-wave">
+                <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="var(--primary)"></path>
+                    <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="var(--primary)"></path>
+                    <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="var(--primary)"></path>
                 </svg>
-                مساعد تشخيص أمراض القلب الذكي
-            </h1>
-            <p>أدخل أعراضك وسنساعدك في تقييم خطر الإصابة بأمراض القلب</p>
+            </div>
         </div>
-        <div>
-            <button class="language-toggle" onclick="toggleLanguage()">English</button>
-            <button class="restart-button" onclick="restartChat()">إعادة البدء</button>
+
+        <!-- Chat container with new message indicator -->
+        <div class="chat-container" id="chat-container">
+            <div class="new-message-indicator">
+                <span>رسائل جديدة</span>
+            </div>
+            <!-- Chat messages will appear here dynamically -->
         </div>
-    </div>
-    
-    <div class="chat-container" id="chat-container">
-        <div class="message bot-message" aria-label="رسالة ترحيب من البوت">
-            مرحباً! أنا مساعدك الذكي لتقييم خطر الإصابة بأمراض القلب. يمكنك وصف أعراضك وسأساعدك في تقييم حالتك.
-            <br><br>مثال: "أشعر بألم في الصدر عند بذل مجهود"
+
+        <!-- Input area with improved design -->
+        <div class="input-container">
+            <div class="quick-suggestions">
+                <div class="suggestions-scroll">
+                    <button class="quick-suggestion">ألم في الصدر</button>
+                    <button class="quick-suggestion">ضيق تنفس</button>
+                    <button class="quick-suggestion">دوخة</button>
+                    <button class="quick-suggestion">خفقان القلب</button>
+                    <button class="quick-suggestion">صداع</button>
+                    <button class="quick-suggestion">غثيان</button>
+                </div>
+            </div>
             
-            <div class="risk-factors">
-                <p><strong>عوامل الخطر الشائعة لأمراض القلب:</strong></p>
-                <div class="risk-factor-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    <span>ارتفاع ضغط الدم</span>
-                </div>
-                <div class="risk-factor-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    <span>ارتفاع الكوليسترول</span>
-                </div>
-                <div class="risk-factor-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    <span>التدخين</span>
-                </div>
-                <div class="risk-factor-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    <span>السكري</span>
-                </div>
-                <div class="risk-factor-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    <span>السمنة وقلة النشاط البدني</span>
+            <div class="input-wrapper">
+                <div class="input-inner">
+                    <textarea id="user-input" placeholder="اكتب أعراضك أو استفسارك هنا..." rows="1"></textarea>
+                    <div class="input-actions">
+                        <button id="attach-button" class="input-action-btn" title="Attach File">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button id="send-button" class="input-action-btn primary">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class="input-area">
-        <input type="text" id="user-input" placeholder="اكتب أعراضك هنا..." autocomplete="off" aria-label="حقل إدخال الأعراض" dir="auto">
-        <button id="send-button" onclick="sendMessage()" aria-label="إرسال الرسالة">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-            </svg>
-        </button>
-    </div>
-    
+
+    <!-- Modern modal dialogs -->
     <div class="modal" id="error-modal">
         <div class="modal-content">
+            <div class="modal-icon error animate__animated animate__bounceIn">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3 class="modal-title">حدث خطأ</h3>
             <p id="error-message"></p>
-            <button class="modal-close" onclick="closeModal()">إغلاق</button>
+            <div class="modal-actions">
+                <button class="modal-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i> إغلاق
+                </button>
+            </div>
         </div>
     </div>
 
-    <script>
-        let userId = localStorage.getItem('userId') || Date.now().toString(36) + Math.random().toString(36).substr(2);
-        let isTyping = false;
-        let language = 'ar';
-        
-        function toggleLanguage() {
-            language = language === 'ar' ? 'en' : 'ar';
-            const html = document.documentElement;
-            html.lang = language;
-            html.dir = language === 'ar' ? 'rtl' : 'ltr';
-            const toggleButton = document.querySelector('.language-toggle');
-            toggleButton.textContent = language === 'ar' ? 'English' : 'العربية';
-            updateUIText();
-        }
-        
-        function updateUIText() {
-            const header = document.querySelector('.header h1');
-            const subheader = document.querySelector('.header p');
-            const input = document.getElementById('user-input');
-            const restartButton = document.querySelector('.restart-button');
-            const welcomeMessage = document.querySelector('.bot-message');
-            
-            if (language === 'en') {
-                header.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                    Smart Heart Disease Diagnosis Assistant
-                `;
-                subheader.textContent = 'Enter your symptoms for a heart disease risk assessment';
-                input.placeholder = 'Type your symptoms here...';
-                restartButton.textContent = 'Restart';
-                
-                welcomeMessage.innerHTML = `
-                    Hello! I am your smart assistant for heart disease risk assessment. Describe your symptoms and I will help evaluate your condition.
-                    <br><br>Example: "I feel chest pain when exerting myself"
-                    
-                    <div class="risk-factors">
-                        <p><strong>Common Heart Disease Risk Factors:</strong></p>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>High blood pressure</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>High cholesterol</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>Smoking</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>Diabetes</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>Obesity and physical inactivity</span>
-                        </div>
-                    </div>
-                `;
-            } else {
-                header.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                    </svg>
-                    مساعد تشخيص أمراض القلب الذكي
-                `;
-                subheader.textContent = 'أدخل أعراضك وسنساعدك في تقييم خطر الإصابة بأمراض القلب';
-                input.placeholder = 'اكتب أعراضك هنا...';
-                restartButton.textContent = 'إعادة البدء';
-                
-                welcomeMessage.innerHTML = `
-                    مرحباً! أنا مساعدك الذكي لتقييم خطر الإصابة بأمراض القلب. يمكنك وصف أعراضك وسأساعدك في تقييم حالتك.
-                    <br><br>مثال: "أشعر بألم في الصدر عند بذل مجهود"
-                    
-                    <div class="risk-factors">
-                        <p><strong>عوامل الخطر الشائعة لأمراض القلب:</strong></p>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>ارتفاع ضغط الدم</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>ارتفاع الكوليسترول</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>التدخين</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>السكري</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>السمنة وقلة النشاط البدني</span>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-        
-        function showTypingIndicator() {
-            if (isTyping) return;
-            isTyping = true;
-            const chatContainer = document.getElementById('chat-container');
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'typing-indicator';
-            typingDiv.id = 'typing-indicator';
-            typingDiv.innerHTML = '<span></span><span></span><span></span>';
-            chatContainer.appendChild(typingDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-        
-        function hideTypingIndicator() {
-            const typingIndicator = document.getElementById('typing-indicator');
-            if (typingIndicator) typingIndicator.remove();
-            isTyping = false;
-        }
-        
-        function showModal(message) {
-            const modal = document.getElementById('error-modal');
-            const errorMessage = document.getElementById('error-message');
-            errorMessage.textContent = message;
-            modal.style.display = 'flex';
-        }
-        
-        function closeModal() {
-            document.getElementById('error-modal').style.display = 'none';
-        }
-        
-        async function restartChat() {
-            const chatContainer = document.getElementById('chat-container');
-            chatContainer.innerHTML = `
-                <div class="message bot-message" aria-label="رسالة ترحيب من البوت">
-                    ${language === 'en' ? 
-                        'Hello! I am your smart assistant for heart disease risk assessment. Describe your symptoms and I will help evaluate your condition.<br><br>Example: "I feel chest pain when exerting myself"' :
-                        'مرحباً! أنا مساعدك الذكي لتقييم خطر الإصابة بأمراض القلب. يمكنك وصف أعراضك وسأساعدك في تقييم حالتك.<br><br>مثال: "أشعر بألم في الصدر عند بذل مجهود"'
-                    }
-                    <div class="risk-factors">
-                        <p><strong>${language === 'en' ? 'Common Heart Disease Risk Factors:' : 'عوامل الخطر الشائعة لأمراض القلب:'}</strong></p>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>${language === 'en' ? 'High blood pressure' : 'ارتفاع ضغط الدم'}</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>${language === 'en' ? 'High cholesterol' : 'ارتفاع الكوليسترول'}</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>${language === 'en' ? 'Smoking' : 'التدخين'}</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>${language === 'en' ? 'Diabetes' : 'السكري'}</span>
-                        </div>
-                        <div class="risk-factor-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <span>${language === 'en' ? 'Obesity and physical inactivity' : 'السمنة وقلة النشاط البدني'}</span>
-                        </div>
-                    </div>
+    <div class="voice-recording-modal" id="voice-modal">
+        <div class="voice-modal-content animate__animated animate__zoomIn">
+            <div class="voice-animation">
+                <div class="voice-circle">
+                    <div class="voice-ripple"></div>
+                    <div class="voice-ripple"></div>
+                    <div class="voice-ripple"></div>
+                    <i class="fas fa-microphone"></i>
                 </div>
-            `;
-            userId = Date.now().toString(36) + Math.random().toString(36).substr(2);
-            localStorage.setItem('userId', userId);
-            await fetch('/api/cleanup', { method: 'POST' });
+            </div>
+            <p id="voice-instruction">يتحدث الآن...</p>
+            <div class="voice-transcript" id="voice-transcript"></div>
+            <button class="stop-recording-btn" onclick="toggleVoiceRecording()">
+                <i class="fas fa-stop"></i> إيقاف التسجيل
+            </button>
+        </div>
+    </div>
+
+    <!-- Confetti effect container -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="mobile-keyboard-helper"></div>
+
+    <style>
+        /* Mobile keyboard helper - prevents layout jumps */
+        .mobile-keyboard-helper {
+            display: none;
+            height: var(--keyboard-height, 0);
         }
         
-        async function sendMessage(message = null) {
+        @media (max-width: 480px) {
+            /* Prevent body scrolling when keyboard is open */
+            body.keyboard-open {
+                position: fixed;
+                width: 100%;
+                overflow: hidden;
+            }
+        }
+    </style>
+
+    <script>
+        // Mobile keyboard detection
+        function isMobileDevice() {
+            return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+        }
+
+        if (isMobileDevice()) {
+            const keyboardHelper = document.querySelector('.mobile-keyboard-helper');
             const inputField = document.getElementById('user-input');
-            const messageText = message || inputField.value.trim();
             
-            if (!messageText) {
-                showModal(language === 'en' ? 'Please enter a description of your symptoms.' : 'يرجى إدخال وصف للأعراض.');
-                return;
-            }
+            inputField.addEventListener('focus', () => {
+                document.body.classList.add('keyboard-open');
+                // This helps with some Android devices
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                }, 100);
+            });
             
-            if (!message) {
-                addMessage(messageText, 'user-message');
-                inputField.value = '';
-            }
-            
-            showTypingIndicator();
-            
-            try {
-                const response = await fetch('/api/diagnose', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: messageText, user_id: userId })
-                });
-                
-                if (!response.ok) throw new Error('Network response was not ok');
-                
-                const data = await response.json();
-                hideTypingIndicator();
-                
-                if (data.error) {
-                    addMessage(data.error, 'bot-message');
-                    if (data.question) {
-                        addMessageWithOptions(data.question, 'bot-message', data.options || []);
-                    }
-                } else if (data.state === 'awaiting_response') {
-                    addMessageWithOptions(data.question, 'bot-message', data.options || []);
-                } else if (data.state === 'complete') {
-                    let diagnosisClass = 'diagnosis-message';
-                    let severityClass = 'severity-medium';
-                    let severityText = language === 'en' ? 'Medium' : 'متوسطة';
-                    
-                    if (data.confidence < 0.65) {
-                        diagnosisClass = 'danger-message';
-                        severityClass = 'severity-high';
-                        severityText = language === 'en' ? 'High' : 'عالية';
-                    } else if (data.confidence >= 0.8) {
-                        diagnosisClass = 'diagnosis-message';
-                        severityClass = 'severity-low';
-                        severityText = language === 'en' ? 'Low' : 'منخفضة';
-                    }
-                    
-                    const diagnosisDiv = document.createElement('div');
-                    diagnosisDiv.className = diagnosisClass;
-                    diagnosisDiv.innerHTML = `
-                        <strong>${language === 'en' ? 'Possible Heart Condition' : 'حالة القلب المحتملة'}:</strong> ${data.diagnosis}
-                        <span class="severity-indicator ${severityClass}">${severityText}</span>
-                        <div class="confidence-meter">
-                            <div class="confidence-level" style="width: ${data.confidence * 100}%"></div>
-                        </div>
-                        <small>${language === 'en' ? 'Model Confidence' : 'ثقة النموذج'}: ${Math.round(data.confidence * 100)}%</small>
-                    `;
-                    
-                    // Add emergency warning if high risk
-                    if (data.confidence < 0.7 && data.diagnosis.toLowerCase().includes('heart')) {
-                        const emergencyDiv = document.createElement('div');
-                        emergencyDiv.className = 'emergency-card';
-                        emergencyDiv.innerHTML = `
-                            <h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                                </svg>
-                                ${language === 'en' ? 'Emergency Warning' : 'تحذير طارئ'}
-                            </h3>
-                            <p>${language === 'en' ? 
-                                'Your symptoms may indicate a serious heart condition. Please seek immediate medical attention.' : 
-                                'قد تشير أعراضك إلى حالة قلبية خطيرة. يرجى التماس العناية الطبية الفورية.'}
-                            </p>
-                        `;
-                        diagnosisDiv.appendChild(emergencyDiv);
-                    }
-                    
-                    const recDiv = document.createElement('div');
-                    recDiv.className = 'recommendations collapsed';
-                    recDiv.innerHTML = `<strong>${language === 'en' ? 'Recommendations' : 'التوصيات'}:</strong> ${data.response.split('التوصيات: ')[1] || data.response}`;
-                    recDiv.onclick = () => {
-                        recDiv.classList.toggle('collapsed');
-                        recDiv.classList.toggle('expanded');
-                    };
-                    diagnosisDiv.appendChild(recDiv);
-                    
-                    document.getElementById('chat-container').appendChild(diagnosisDiv);
-                    
-                    setTimeout(() => {
-                        addMessage(language === 'en' ? 'Do you have other symptoms to discuss?' : 'هل لديك أعراض أخرى تريد استشارتي عنها؟', 'bot-message');
-                    }, 1000);
-                }
-                
-                if (data.user_id) {
-                    userId = data.user_id;
-                    localStorage.setItem('userId', userId);
-                }
-                
-                const chatContainer = document.getElementById('chat-container');
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            } catch (error) {
-                hideTypingIndicator();
-                showModal(language === 'en' ? 'Sorry, an error occurred. Please try again.' : 'عذرًا، حدث خطأ في المعالجة. يرجى المحاولة مرة أخرى.');
-                console.error('Error:', error);
-            }
+            inputField.addEventListener('blur', () => {
+                document.body.classList.remove('keyboard-open');
+            });
         }
-        
-        function addMessage(text, className) {
-            const chatContainer = document.getElementById('chat-container');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${className}`;
-            messageDiv.textContent = text;
-            messageDiv.setAttribute('aria-label', className === 'user-message' ? 'رسالة المستخدم' : 'رسالة البوت');
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-        
-        function addMessageWithOptions(text, className, options) {
-            const chatContainer = document.getElementById('chat-container');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${className}`;
-            messageDiv.innerHTML = text;
-            messageDiv.setAttribute('aria-label', 'رسالة البوت مع خيارات');
-            
-            if (options && options.length > 0) {
-                const optionsContainer = document.createElement('div');
-                optionsContainer.className = 'options-container';
-                
-                options.forEach(option => {
-                    const button = document.createElement('button');
-                    button.className = 'option-button';
-                    button.textContent = option;
-                    button.setAttribute('aria-label', `خيار: ${option}`);
-                    button.onclick = () => {
-                        button.disabled = true;
-                        sendMessage(option);
-                    };
-                    optionsContainer.appendChild(button);
-                });
-                
-                messageDiv.appendChild(optionsContainer);
-            }
-            
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-        
-        document.getElementById('user-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') sendMessage();
-        });
-        
-        document.getElementById('user-input').focus();
-        
-        setInterval(async () => {
-            await fetch('/api/cleanup', { method: 'POST' });
-        }, 3600000);
     </script>
+
+    <script src="/static/script.js"></script>
 </body>
 </html>
